@@ -53,3 +53,8 @@ group :test do
   gem 'rspec-rails', '~> 3.4'
   gem "shoulda-matchers"
 end
+
+gem 'versionist'
+gem "rack-cors", require: "rack/cors"
+
+gem 'devise'
