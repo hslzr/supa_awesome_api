@@ -5,6 +5,7 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   before_create :ensure_token
+  has_many :comments
 
   def ensure_token
     begin

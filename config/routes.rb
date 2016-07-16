@@ -12,6 +12,7 @@ Rails.application.routes.draw do
       resources :registrations, only: [:create]
 
       resources :sessions, only: [:create]
+      resources :comments, only: [:create, :index]
 
 
       root 'base#unauthorized'
