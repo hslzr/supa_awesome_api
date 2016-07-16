@@ -3,7 +3,7 @@ class Api::V1::PostsController < Api::V1::BaseController
   skip_before_action :authenticate!, only: [:index, :show]
 
   def index
-    posts = Post.includes(:user, :comments).page(params[:page]).per(10)
+    posts = Post.includes(:user, { comments: [:user] }).page(params[:page]).per(10)
     render json: posts, meta: json_pagination(posts), status: 200
   end
 

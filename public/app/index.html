@@ -11,12 +11,13 @@
   <div id="author-name"></div>
 
 
+  <section id="posts">
+  </section>
+
 <script type="text/javascript">
   localStorage.setItem('user-session', JSON.stringify({ email: 'jc@email.com', token: 'y4SKqFQzcg' }))
   session = JSON.parse(localStorage.getItem('user-session'));
   var headers = { 'Authorization': 'Token token="' + session.token + '", email="' + session.email + '"'};
-
-  console.log(headers);
 
   $.ajax
   ({
@@ -33,7 +34,24 @@
       });
       $('#timezones').html(options);
       console.log(data);
-      alert('Hello!');
+    }
+  });
+
+
+  $.ajax
+  ({
+    type: "GET",
+    url: "http://localhost:3000/api/posts",
+    dataType: 'json',
+    headers: headers,
+    success: function (data){
+      $.each(data.posts, function(index, post) {
+        var title = '<h2>'+post.title+'</h2>';
+        var body = '<p>'+post.body+'</p>';
+        article = $('<article />').html(title+body);
+        $('#posts').append(article);
+         /* iterate through array or object */
+      });
     }
   });
 
