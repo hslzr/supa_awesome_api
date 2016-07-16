@@ -1,7 +1,9 @@
 class Api::V1::PostsController < Api::V1::BaseController
 
+  skip_before_action :authenticate!, only: [:index, :show]
+
   def index
-    render json: Post.all, status: 200
+    render json: Post.includes(:user, :comments).all, status: 200
   end
 
   def show
@@ -10,7 +12,7 @@ class Api::V1::PostsController < Api::V1::BaseController
   end
 
   def create
-    post = Post.new(post_params)
+    post = current_user.posts.build(post_params)
     if post.save
       render json: post, status: 201
     else
@@ -38,9 +40,7 @@ class Api::V1::PostsController < Api::V1::BaseController
   def post_params
     params.require(:post).permit(
        :title,
-       :body,
-       :slug,
-       :user_id
+       :body
     )
   end
 end

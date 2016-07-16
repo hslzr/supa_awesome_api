@@ -1,7 +1,6 @@
 FactoryGirl.define do
   factory :post do
-    title "MyString"
-    body "MyText"
-    slug "my-string"
+    title { FFaker::BaconIpsum.phrase[0..40] }
+    body  { FFaker::BaconIpsum.paragraphs }
   end
 end
