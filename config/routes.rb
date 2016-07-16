@@ -12,6 +12,8 @@ Rails.application.routes.draw do
       resources :registrations, only: [:create]
       resources :sessions, only: [:create]
 
+
+      get '/timezones', to: 'base#timezones'
       root 'base#unauthorized'
     end
   end
