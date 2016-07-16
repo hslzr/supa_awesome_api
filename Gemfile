@@ -40,7 +40,7 @@ group :development do
   gem 'spring'
 end
 
-gem 'active_model_serializers'
+gem "active_model_serializers", github: "rails-api/active_model_serializers", branch: "0-8-stable"
 
 group :development, :test do
   gem "factory_girl_rails"
