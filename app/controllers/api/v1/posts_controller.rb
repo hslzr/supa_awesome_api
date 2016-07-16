@@ -3,7 +3,8 @@ class Api::V1::PostsController < Api::V1::BaseController
   skip_before_action :authenticate!, only: [:index, :show]
 
   def index
-    render json: Post.includes(:user, :comments).all, status: 200
+    posts = Post.includes(:user, :comments).page(params[:page]).per(10)
+    render json: posts, meta: json_pagination(posts), status: 200
   end
 
   def show
@@ -37,10 +38,10 @@ class Api::V1::PostsController < Api::V1::BaseController
 
   private
 
-  def post_params
-    params.require(:post).permit(
-       :title,
-       :body
-    )
-  end
+    def post_params
+      params.require(:post).permit(
+         :title,
+         :body
+      )
+    end
 end
