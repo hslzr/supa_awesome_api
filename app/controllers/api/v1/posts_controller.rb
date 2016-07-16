@@ -1,16 +1,19 @@
 class Api::V1::PostsController < Api::V1::BaseController
 
+  skip_before_action :authenticate!, only: [:index, :show]
+
   def index
-    render json: Post.all, status: 200
+    posts = Post.includes(:user, :comments).page(params[:page]).per(10)
+    render json: posts, meta: json_pagination(posts), status: 200
   end
 
   def show
-    post = Post.find(params[:id])
+    post = Post.includes(:user, { comments: [:user] }).find(params[:id])
     render json: post, status: 200
   end
 
   def create
-    post = Post.new(post_params)
+    post = current_user.posts.build(post_params)
     if post.save
       render json: post, status: 201
     else
@@ -35,12 +38,10 @@ class Api::V1::PostsController < Api::V1::BaseController
 
   private
 
-  def post_params
-    params.require(:post).permit(
-       :title,
-       :body,
-       :slug,
-       :user_id
-    )
-  end
+    def post_params
+      params.require(:post).permit(
+         :title,
+         :body
+      )
+    end
 end

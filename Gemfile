@@ -58,3 +58,5 @@ gem 'versionist'
 gem "rack-cors", require: "rack/cors"
 
 gem 'devise'
+
+gem 'kaminari'

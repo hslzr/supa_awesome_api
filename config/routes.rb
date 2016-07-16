@@ -11,10 +11,14 @@ Rails.application.routes.draw do
 
       resources :registrations, only: [:create]
       resources :sessions, only: [:create]
-      resources :comments, only: [:create, :index]
 
-      resources :posts
 
+      resources :posts do
+        resources :comments, only: [:create, :index]
+      end
+
+
+      get '/timezones', to: 'base#timezones'
       root 'base#unauthorized'
     end
   end
