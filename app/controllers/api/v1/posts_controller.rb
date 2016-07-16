@@ -7,7 +7,7 @@ class Api::V1::PostsController < Api::V1::BaseController
   end
 
   def show
-    post = Post.find(params[:id])
+    post = Post.includes(:user, { comments: [:user] }).find(params[:id])
     render json: post, status: 200
   end
 
