@@ -1,0 +1,44 @@
+<html>
+<head>
+<title>My blog!</title>
+
+<script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+
+</head>
+
+<body>
+  <select name="" id="timezones"></select>
+  <div id="author-name"></div>
+
+
+<script type="text/javascript">
+  localStorage.setItem('user-session', JSON.stringify({ email: 'jc@email.com', token: 'y4SKqFQzcg' }))
+  session = JSON.parse(localStorage.getItem('user-session'));
+  var headers = { 'Authorization': 'Token token="' + session.token + '", email="' + session.email + '"'};
+
+  console.log(headers);
+
+  $.ajax
+  ({
+    type: "GET",
+    url: "http://localhost:3000/api/timezones",
+    dataType: 'json',
+    async: false,
+    headers: headers,
+    success: function (data){
+      options = [];
+      $.each(data, function(index, val) {
+        options.push('<option value="'+val+'">'+val+'</option>');
+         /* iterate through array or object */
+      });
+      $('#timezones').html(options);
+      console.log(data);
+      alert('Hello!');
+    }
+  });
+
+
+</script>
+
+</body>
+</html>
